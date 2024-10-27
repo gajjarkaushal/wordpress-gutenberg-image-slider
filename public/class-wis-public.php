@@ -42,7 +42,7 @@ class Wordpress_Image_Slider_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
-		add_shortcode('wis_slider', array($this, 'wis_slider_options'));
+		add_shortcode('image_gallery', array($this, 'wis_slider_options'));
 
 	}
 	/**
@@ -85,20 +85,22 @@ class Wordpress_Image_Slider_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wis-front', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wis-front.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( 'wis-front', 'pic_ajax_object', array(
         	'ajax_url' => admin_url( 'admin-ajax.php' ),
         	'nonce'    => wp_create_nonce( 'wis_ajax_nonce' ),
     		) 
 		);
 
-	}	
-	private function wis_public_init(){
-		
-
 	}
 	public function wis_slider_options($atts) {
-        $options = get_option('custom_image_slider_options');
+		$id = intval($atts['id']);
+		if(empty($id)) return;
+
+        $options = get_post_meta($id,'wis_slider_options',true);
+
+		if(empty($options)) return; 
+
         $timer = isset($options['slider_timer']) ? (int)$options['slider_timer'] * 1000 : 3000;
 
         ob_start();
@@ -118,28 +120,6 @@ class Wordpress_Image_Slider_Public {
                 </div>
             <?php endforeach; ?>
         </div>
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const slider = document.querySelector('.custom-image-slider');
-            const slides = slider.querySelectorAll('.slide');
-            const timer = slider.dataset.timer || 3000;
-            let index = 0;
-
-            function showNextSlide() {
-                slides[index].classList.remove('active');
-                index = (index + 1) % slides.length;
-                slides[index].classList.add('active');
-            }
-
-            setInterval(showNextSlide, timer);
-        });
-        </script>
-        <style>
-        .wordpress-image-slider { position: relative; }
-        .wordpress-image-slider .slide { display: none; position: absolute; width: 100%; }
-        .wordpress-image-slider .slide.active { display: block; }
-        .wordpress-image-slider .caption { background: rgba(0, 0, 0, 0.5); padding: 10px; color: #fff; }
-        </style>
         <?php
         return ob_get_clean();
     }

@@ -26,11 +26,20 @@ class Wordpress_Image_Slider_CPT {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
+        // Register the custom post type on initialization
         add_action('init', array($this, 'wis_register_post_type'));
-        add_action('add_meta_boxes', array($this,'wis_slider_settings_meta_box'));
-        add_action('save_post', array($this,'wis_save_post'));
-
-
+        
+        // Add meta boxes for slider settings
+        add_action('add_meta_boxes', array($this, 'wis_slider_settings_meta_box'));
+        
+        // Save the slider options when the post is saved
+        add_action('save_post', array($this, 'wis_save_post'));
+        
+        // Add a column for shortcodes in the admin post list
+        add_filter('manage_wis-slider_posts_columns', array($this, 'wis_shortcode_columns'));
+        
+        // Populate the shortcode column with the appropriate data
+        add_action('manage_wis-slider_posts_custom_column', array($this, 'wis_populate_shortcode_columns'), 10, 2);
     }
     /**
      * Registers the custom post type for the plugin.
@@ -146,6 +155,17 @@ class Wordpress_Image_Slider_CPT {
             }    
         }
     }
+    /**
+     * Recursively sanitizes a multidimensional array.
+     *
+     * This function iterates over each element of the provided array, recursively
+     * sanitizing nested arrays and individual values. It ensures that the data is 
+     * safe for storage and output by sanitizing values based on their data type.
+     *
+     * @param array $data The multidimensional array to sanitize.
+     *
+     * @return array The sanitized multidimensional array.
+     */
     function wis_sanitize_multidimensional_array($data) {
         // Initialize an empty array to hold sanitized data
         $sanitized_data = array();
@@ -162,6 +182,13 @@ class Wordpress_Image_Slider_CPT {
 
         return $sanitized_data;
     }
+    /**
+     * Sanitizes a given value based on its data type.
+     *
+     * @param mixed $value The value to sanitize.
+     *
+     * @return mixed The sanitized value.
+     */
     function wsi_sanitize_value($value) {
         if (is_string($value)) {
             // Sanitize strings
@@ -177,5 +204,28 @@ class Wordpress_Image_Slider_CPT {
             return null; // or return a default value
         }
     }
+    /**
+     * Adds a new column for the shortcode in the Image Gallery CPT
+     *
+     * @param array $columns The columns array
+     * @return array
+     */
+    function wis_shortcode_columns($columns) {
+        $columns['shortcode'] = __('Shortcode'); // Add new column
+        return $columns;
+    }
+    /**
+     * Populates the shortcode column in the Image Gallery CPT
+     *
+     * @param string $column The column name
+     * @param int $post_id The post ID
+     */
+    function wis_populate_shortcode_columns($column, $post_id) {
+        if ($column === 'shortcode') {
+            // Display the shortcode with the post ID
+            echo '[image_gallery id=' . esc_attr($post_id) . ']';
+        }
+    }
+
 } 
 new Wordpress_Image_Slider_CPT();
