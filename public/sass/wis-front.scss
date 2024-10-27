@@ -1,0 +1,111 @@
+// banner.scss
+$primary-color: #e84b39;
+$secondary-color: #2ecc71;
+$text-color: #fff;
+$font-stack: 'Arial', sans-serif;
+
+.banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    max-height: 600px; // Adjust as needed
+
+    .slider-wrapper {
+        overflow: hidden; // Prevent overflow here
+        height: 100%; // Full height for the wrapper
+    }
+
+    .slider {
+        display: flex; // Arrange slides in a row
+        transition: transform 0.5s ease; // Smooth transition
+        width: 100%;
+        height: 100%; // Ensuring the slider takes full height
+
+        .slides {
+            display: flex; // Flex to arrange slides in a row
+            width: 100%; // Full width
+            height: 100%; // Full height
+
+            .slide {
+                display: none; // Hide all slides by default
+                width: 100%; // Each slide takes full width
+                height: 100%; // Each slide takes full height
+                background-size: cover; // Ensure background covers the slide
+                background-position: center; // Center the background image
+                position: relative; // Position relative for content
+
+                .banner-content {
+                    position: absolute;
+                    bottom: 20px; // Space from bottom
+                    left: 20px; // Space from left
+                    color: $text-color; // Set text color
+                    padding: 20px; // Padding for content
+                    border-radius: 5px; // Rounded corners
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    text-align: center;
+                    width: 50%;
+
+                    h2.banner-header {
+                        font-family: $font-stack; // Font stack for header
+                        font-size: 24px; // Title size
+                        margin: 0; // Remove default margin
+                        font-weight: 700;
+                        color: $text-color;
+                    }
+                    hr {
+                        width: 80px;
+                        margin-top: 30px;
+                        margin-bottom: 30px;
+                        border: 2px solid $primary-color;
+                    }
+                    p.banner-description {
+                        font-size: 16px; // Description font size
+                        margin: 10px 0; // Spacing for description
+                        margin-bottom: 30px;
+                    }
+
+                    a.cta-button {
+                        background-color: $primary-color; // Button color
+                        color: $text-color; // Text color
+                        padding: 10px 20px; // Button padding
+                        text-decoration: none; // Remove underline
+                        border-radius: 3px; // Rounded button
+                        transition: background-color 0.3s ease; // Smooth transition for button
+
+                        &:hover {
+                            background-color: $secondary-color; // Change color on hover
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Navigation buttons
+    .prev,
+    .next {
+        position: absolute;
+        top: 50%; // Center vertically
+        transform: translateY(-50%); // Adjust for centering
+        background-color: rgba(0, 0, 0, 0.5); // Semi-transparent background
+        color: $text-color; // Text color
+        border: none; // No border
+        padding: 10px; // Button padding
+        cursor: pointer; // Pointer cursor
+        z-index: 100; // Ensure buttons are above slides
+
+        &.prev {
+            left: 10px; // Position left
+        }
+
+        &.next {
+            right: 10px; // Position right
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.7); // Darken background on hover
+        }
+    }
+}
