@@ -2,3 +2,17 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+.wis-wrap h3.slide-heading {
+    display: flex;
+    justify-content: space-between;
+}
+.wis-wrap .slider-image {
+    display: flex;
+    margin: 10px;
+}
+.wis-wrap .slider-image input,.slider-image button {
+    height: 20px;
+}
+.wis-wrap .slider-image input,.slider-image textarea,.slider-image button {
+    margin: 0px  5px;
+}

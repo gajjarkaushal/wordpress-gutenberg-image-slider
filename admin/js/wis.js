@@ -70,7 +70,7 @@ WISJS = {
 	 */
 	addImageBlock: function(url, title = '', description = '', ctaText = '', ctaUrl = '') {
 		const sliderImagesContainer = document.getElementById('slider_images');
-		const timestamp = Date.now();
+		let timestamp = Date.now();
 
 		// Create the image container div with draggable attribute
 		const imageDiv = document.createElement('div');
@@ -81,7 +81,7 @@ WISJS = {
 		// Hidden input for the image URL
 		const urlInput = document.createElement('input');
 		urlInput.type = 'hidden';
-		urlInput.name = `custom_image_slider_options[slides][${timestamp}][url]`;
+		urlInput.name = `wis_slider_options[slides][${timestamp}][url]`;
 		urlInput.value = url;
 
 		// Displayed image preview
@@ -92,13 +92,13 @@ WISJS = {
 		// Title input
 		const titleInput = document.createElement('input');
 		titleInput.type = 'text';
-		titleInput.name = `custom_image_slider_options[slides][${timestamp}][title]`;
+		titleInput.name = `wis_slider_options[slides][${timestamp}][title]`;
 		titleInput.placeholder = 'Title';
 		titleInput.value = title;
 
 		// Description input
 		const descriptionInput = document.createElement('textarea');
-		descriptionInput.name = `custom_image_slider_options[slides][${timestamp}][description]`;
+		descriptionInput.name = `wis_slider_options[slides][${timestamp}][description]`;
 		descriptionInput.placeholder = 'Description';
 		descriptionInput.value = description;
 		descriptionInput.rows = 4; // Set number of visible rows
@@ -107,14 +107,14 @@ WISJS = {
 		// CTA Button Name input
 		const ctaTextInput = document.createElement('input');
 		ctaTextInput.type = 'text';
-		ctaTextInput.name = `custom_image_slider_options[slides][${timestamp}][cta_text]`;
+		ctaTextInput.name = `wis_slider_options[slides][${timestamp}][cta_text]`;
 		ctaTextInput.placeholder = 'CTA Button Name';
 		ctaTextInput.value = ctaText;
 
 		// CTA URL input
 		const ctaUrlInput = document.createElement('input');
 		ctaUrlInput.type = 'url';
-		ctaUrlInput.name = `custom_image_slider_options[slides][${timestamp}][cta_url]`;
+		ctaUrlInput.name = `wis_slider_options[slides][${timestamp}][cta_url]`;
 		ctaUrlInput.placeholder = 'CTA Button URL';
 		ctaUrlInput.value = ctaUrl;
 

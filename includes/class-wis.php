@@ -74,6 +74,10 @@ class Wordpress_Image_Slider {
 	 */
 	private function load_dependencies() {
 
+		/*
+		* Create a custom post type for the slider
+		*/
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wis-cpt.php';
         /*
         * Load the admin area JS, CSS and functinality file.
         */

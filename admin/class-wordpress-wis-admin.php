@@ -42,8 +42,6 @@ class Wordpress_Image_Slider_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
-		add_action('admin_menu', array($this, 'wis_register_settings_page'));
-		add_action('admin_init', array($this, 'wis_wordpress_image_slider_settings_init'));
 	}
 
 	/**
@@ -91,38 +89,4 @@ class Wordpress_Image_Slider_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wis.js', array( 'jquery' ), $this->version, false );
 
 	}
-	public function wis_register_settings_page(){
-		add_menu_page(
-            'Image Slider Settings',
-            'Image Slider',
-            'manage_options',
-            'custom-image-slider',
-            array($this, 'wsl_settings_page_html'),
-            'dashicons-images-alt2'
-        );
-	}
-	public function wsl_settings_page_html() {
-		include(WIS_PATH.'admin/partials/wordpress-image-slider-display.php');
-    }
-	public function wis_wordpress_image_slider_settings_init(){
-		register_setting('custom_image_slider_settings', 'custom_image_slider_options', array($this,'wis_save_slider_data'));
-	}
-	public function wis_save_slider_data($input) {
-	   // Sanitize the slider timer
-	   $input['slider_timer'] = absint($input['slider_timer']);
-
-	   // Sanitize slides
-	   if (isset($input['slides']) && is_array($input['slides'])) {
-		   foreach ($input['slides'] as &$slide) {
-			   $slide['url'] = esc_url_raw($slide['url']);
-			   $slide['title'] = sanitize_text_field($slide['title']);
-			   $slide['description'] = sanitize_textarea_field($slide['description']);
-			   $slide['cta_text'] = sanitize_text_field($slide['cta_text']);
-			   $slide['cta_url'] = esc_url_raw($slide['cta_url']);
-		   }
-	   }
-   
-	   return $input;
-    }
-
 }

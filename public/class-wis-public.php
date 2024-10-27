@@ -42,7 +42,7 @@ class Wordpress_Image_Slider_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
-		add_shortcode('wis_slider', array($this, 'wis_shortcode'));
+		add_shortcode('wis_slider', array($this, 'wis_slider_options'));
 
 	}
 	/**
@@ -92,12 +92,12 @@ class Wordpress_Image_Slider_Public {
     		) 
 		);
 
-	}
+	}	
 	private function wis_public_init(){
 		
 
 	}
-	public function wis_shortcode($atts) {
+	public function wis_slider_options($atts) {
         $options = get_option('custom_image_slider_options');
         $timer = isset($options['slider_timer']) ? (int)$options['slider_timer'] * 1000 : 3000;
 
