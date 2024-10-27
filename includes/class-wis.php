@@ -143,8 +143,8 @@ class Wordpress_Image_Slider {
 
 		$plugin_public = new Wordpress_Image_Slider_Public( $this->get_plugin_name(), $this->get_version() );
 
-		add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		add_action( 'wp_enqueue_scripts', [$plugin_public, 'enqueue_styles'] );
+		add_action( 'wp_enqueue_scripts', [$plugin_public, 'enqueue_scripts'] );
 
 	}
 

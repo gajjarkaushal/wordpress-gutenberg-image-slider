@@ -35,12 +35,12 @@
                         <textarea name="custom_image_slider_options[slides][<?php echo $index; ?>][description]" rows="4" cols="50"><?php echo esc_attr($slide['description'] ?? ''); ?></textarea>
                         <input type="text" name="custom_image_slider_options[slides][<?php echo $index; ?>][cta_text]" placeholder="CTA Button Name" value="<?php echo esc_attr($slide['cta_text'] ?? ''); ?>">
                         <input type="url" name="custom_image_slider_options[slides][<?php echo $index; ?>][cta_url]" placeholder="CTA Button URL" value="<?php echo esc_url($slide['cta_url'] ?? ''); ?>">
-                        <button type="button" class="remove-image">Remove</button>
+                        <button type="button" class="remove-image button"><?php _e('Remove','wis'); ?></button>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
-        <button type="button" id="add_image">Add Image</button>
+        <button type="button" id="add_image"><?php _e('Add Image', 'wis'); ?></button>
         <?php submit_button(); ?>
     </form>
 </div>
