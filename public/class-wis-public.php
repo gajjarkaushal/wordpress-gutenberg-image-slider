@@ -64,7 +64,7 @@ class Wordpress_Image_Slider_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wis-front.css', array(), $this->version, 'all' );		
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'sass/wis-front.css', array(), $this->version, 'all' );		
 
 	}
 	/**
@@ -106,20 +106,29 @@ class Wordpress_Image_Slider_Public {
         ob_start();
 		
         ?>
-        <div class="wordpress-image-slider" data-timer="<?php echo esc_attr($timer); ?>">
-            <?php foreach ($options['slides'] as $slide) : ?>
-                <div class="slide">
-                    <img src="<?php echo esc_url($slide['url']); ?>" alt="<?php echo esc_attr($slide['title']); ?>">
-                    <div class="caption">
-                        <h2><?php echo esc_html($slide['title']); ?></h2>
-                        <p><?php echo esc_html($slide['description']); ?></p>
-                        <?php if ($slide['cta_url'] && $slide['cta_text']) : ?>
-                            <a href="<?php echo esc_url($slide['cta_url']); ?>" class="cta-button"><?php echo esc_html($slide['cta_text']); ?></a>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
+		<!-- slider.php -->
+		<!-- slider.php -->
+		<div class="banner">
+			<div class="slider">
+				<div class="slides">
+					<?php foreach ($options['slides'] as $slide) : ?>
+						<div class="slide" style="background-image: url('<?php echo esc_url($slide['url']); ?>');">
+							<div class="banner-content">
+								<h2 class="banner-header"><?php echo esc_html($slide['title']); ?></h2>
+								<hr />
+								<p class="banner-description"><?php echo esc_html($slide['description']); ?></p>
+								<?php if ($slide['cta_url'] && $slide['cta_text']) : ?>
+									<a href="<?php echo esc_url($slide['cta_url']); ?>" class="cta-button"><?php echo esc_html($slide['cta_text']); ?></a>
+								<?php endif; ?>
+							</div>
+						</div>
+					<?php endforeach; ?>
+				</div>
+				<button class="prev">&#10094;</button>
+				<button class="next">&#10095;</button>
+			</div>
+		</div>
+
         <?php
         return ob_get_clean();
     }

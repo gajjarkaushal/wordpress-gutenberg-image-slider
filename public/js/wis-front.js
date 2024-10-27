@@ -1,32 +1,39 @@
-(function( $ ) {
-	'use strict';
+// banner-slider.js
+document.addEventListener('DOMContentLoaded', () => {
+    let slideIndex = 0;
 
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.slide');
 
-})( jQuery );
+        if (index >= slides.length) {
+            slideIndex = 0; // Loop back to first slide
+        } else if (index < 0) {
+            slideIndex = slides.length - 1; // Go to last slide
+        } else {
+            slideIndex = index;
+        }
+
+        slides.forEach((slide, i) => {
+            slide.style.display = (i === slideIndex) ? 'block' : 'none'; // Show current slide
+        });
+    }
+
+    function changeSlide(n) {
+        showSlide(slideIndex + n);
+    }
+
+    // Auto slide every 5 seconds
+    setInterval(() => {
+        changeSlide(1);
+    }, 5000);
+
+    // Show the first slide
+    showSlide(slideIndex);
+
+    // Add event listeners for navigation buttons
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+
+    prevButton.addEventListener('click', () => changeSlide(-1));
+    nextButton.addEventListener('click', () => changeSlide(1));
+});
