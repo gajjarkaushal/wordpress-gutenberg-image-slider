@@ -2,6 +2,7 @@
 // Drag and drop functionality variable
 let draggedElement = null;
 let sliderImagesContainer = null;
+let MultipleImageCnt = 0;
 /**
  * All of the code for your admin-facing JavaScript source using venila JS
  * should reside in this file.
@@ -21,6 +22,7 @@ WISJS = {
 			sliderImagesContainer = document.getElementById('slider_images');
 			const addImageButton = document.getElementById('add_image');
 			const sliderImages  = sliderImagesContainer.querySelectorAll('.slider-image');
+			const deleteImage  = sliderImagesContainer.querySelectorAll('.remove-image');
 			// intialize drag and drop functionality
 			// Loop through each slider image
 			if(sliderImages){
@@ -53,10 +55,16 @@ WISJS = {
 						}
 		
 						// If valid, add image block
-						WISJS.addImageBlock(file.url);
+						let timestamp = Date.now();
+						MultipleImageCnt = MultipleImageCnt + 1
+						timestamp = timestamp + MultipleImageCnt;
+						WISJS.addImageBlock(file.url,timestamp);
 					});
 				}).open();
 			});	
+			
+			// Remove Image Event
+			WISJS.deleteImage();
 		});
 	},
 	/**
@@ -68,9 +76,9 @@ WISJS = {
 	 * @param {string} [ctaText=''] - The CTA button text.
 	 * @param {string} [ctaUrl=''] - The CTA button URL.
 	 */
-	addImageBlock: function(url, title = '', description = '', ctaText = '', ctaUrl = '') {
+	addImageBlock: function(url, timestamp = '', title = '', description = '', ctaText = '', ctaUrl = '') {
 		const sliderImagesContainer = document.getElementById('slider_images');
-		let timestamp = Date.now();
+		
 
 		// Create the image container div with draggable attribute
 		const imageDiv = document.createElement('div');
@@ -242,6 +250,21 @@ WISJS = {
 		sliderImagesContainer.querySelectorAll('.slider-image').forEach(el => {
 			el.style['border-top'] = '';
 			el.style['border-bottom'] = '';
+		});
+	},
+	deleteImage: function(event) {
+		// Select all remove buttons within the slider_images div
+		const removeButtons = document.querySelectorAll('#slider_images .remove-image');
+
+		// Loop through each button and attach a click event listener
+		removeButtons.forEach(function(button) {
+			button.addEventListener('click', function() {
+				// Find the closest parent slider-image div and remove it from the DOM
+				const sliderImage = button.closest('.slider-image');
+				if (sliderImage) {
+					sliderImage.remove();
+				}
+			});
 		});
 	}
 };
