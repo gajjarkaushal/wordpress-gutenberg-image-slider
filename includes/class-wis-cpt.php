@@ -84,6 +84,7 @@ class Wordpress_Image_Slider_CPT {
             'has_archive'        => false,
             'hierarchical'       => false,
             'menu_position'      => null,
+            'menu_icon'          => 'dashicons-slides',
             'supports'           => array( 'title', 'editor' ),
             // 'show_in_rest' => true,
         );
